@@ -1,0 +1,7 @@
+ryanair_apache:
+  image: docker_generic_apache
+  container_name: ryanair_apache
+  ports:
+    - "8080:80"
+  volumes:
+    - ./:/var/www/html

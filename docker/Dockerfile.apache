@@ -1,0 +1,14 @@
+## docker build -t docker_generic_apache
+
+FROM phusion/baseimage
+
+RUN apt-get update && apt-get install -y apache2 libapache2-mod-php5 php5-mysql mysql-client && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    mkdir -p /etc/my_init.d && touch /etc/service/syslog-forwarder/down && \
+    sed -i 's/www-data:x:33:33:/www-data:x:1000:1000:/g' /etc/passwd && \
+    sed -i 's/www-data:x:33/www-data:x:1000/g' /etc/group && \
+    a2enmod rewrite
+
+ADD scripts/apache.sh /etc/my_init.d/apache.sh
+
+CMD ["/sbin/my_init"]
