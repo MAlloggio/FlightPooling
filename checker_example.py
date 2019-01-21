@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys
-from ryanairlib import *
+from Class.ryanairlib import *
 
 ## Fosdem destination :D
 ORIGIN="BDS"

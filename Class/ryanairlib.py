@@ -1,5 +1,7 @@
 import requests
 import json
+from Class.ryanair import Ryanair
+from Class import company
 
 FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?"
 #FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?ADT=1&CHD=0&DateIn=" + DATEIN + "&DateOut=" + DATEOUT + "&Destination=" + DESTINATION + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + ORIGIN + "&RoundTrip=true&TEEN=0"
@@ -35,16 +37,29 @@ def searchAirport(searchname):
             return result
 
 def main():
-   result= searchAirport('Bari')
-   print (result)
+   #result= searchAirport('Bari')
+   #print (result)
+   FLIGHT_URL = "https://desktopapps.ryanair.com/en-gb/availability?"
+   # FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?ADT=1&CHD=0&DateIn=" + DATEIN + "&DateOut=" + DATEOUT + "&Destination=" + DESTINATION + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + ORIGIN + "&RoundTrip=true&TEEN=0"
+
+   API_URL = "https://api.ryanair.com/aggregate/3/common?embedded=airports&market=en-gb"
+   # API_URL="http://localhost:8080/airports.json"
+   volo = Ryanair(FLIGHT_URL,API_URL)
+
+
    ORIGIN = "BVA"
    DESTINATION = "BRI"
-   DATEIN = "2019-04-24"
-   DATEOUT = "2019-05-02"
+   DATEIN = "2019-05-02"
+   DATEOUT = "2019-04-24"
    TYPE_OF_FLIGHT = "regularFare"
 
-   p = printFlights(ORIGIN, DESTINATION, DATEIN, DATEOUT, TYPE_OF_FLIGHT)
-   print (p)
+   biglietti = volo.GetFlight(ORIGIN,DESTINATION,DATEIN,DATEOUT,TYPE_OF_FLIGHT)
+
+
+   volo.PrintFlights(biglietti)
+
+   #printFlights(ORIGIN, DESTINATION, DATEIN, DATEOUT, TYPE_OF_FLIGHT)
+   #print (p)
 
 
 
