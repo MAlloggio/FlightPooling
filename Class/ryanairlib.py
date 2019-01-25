@@ -1,6 +1,10 @@
 import requests
 import json
-from Class.ryanair import Ryanair
+from Class.ryanair import flightsRyanair
+from Class.SqlManager import mySqlUtility
+from Class.SqlManager import managerSql
+from datetime import datetime
+import time
 from Class import company
 
 FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?"
@@ -44,25 +48,33 @@ def main():
 
    API_URL = "https://api.ryanair.com/aggregate/3/common?embedded=airports&market=en-gb"
    # API_URL="http://localhost:8080/airports.json"
-   volo = Ryanair(FLIGHT_URL,API_URL)
+   volo = flightsRyanair(FLIGHT_URL,API_URL)
 
 
    ORIGIN = "BVA"
    DESTINATION = "BRI"
    DATEIN = "2019-05-02"
-   DATEOUT = "2019-04-24"
+   DATEOUT = "2019-04-22"
    TYPE_OF_FLIGHT = "regularFare"
 
-   biglietti = volo.GetFlight(ORIGIN,DESTINATION,DATEIN,DATEOUT,TYPE_OF_FLIGHT)
+   biglietti = volo.getFlights(ORIGIN,DESTINATION,DATEIN,DATEOUT)
 
 
-   volo.PrintFlights(biglietti)
+   volo.printFlights(biglietti)
 
    #printFlights(ORIGIN, DESTINATION, DATEIN, DATEOUT, TYPE_OF_FLIGHT)
    #print (p)
 
+'''def TestDB():
+    con = mySqlUtility()
+    con.connection()
+    ts=time.time()
+    i=datetime.fromtimestamp(ts).strftime('%d/%m/%Y %H:%M:%S')
+    print(i)
+    TestMat=[[i,'FR1234']]
+    manager = managerSql()
+    manager.insertFlight(TestMat)'''
 
-
-
+   # print ("STR_TO_DATE('" + TestMat[0][0] + "','%Y/%m/%d %H:%i%s'),Y)")
 if __name__ == "__main__":
     main()

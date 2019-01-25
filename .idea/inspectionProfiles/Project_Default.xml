@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="Class.company.__" />
+          <option value="Class.SqlManager.e" />
         </list>
       </option>
     </inspection_tool>
