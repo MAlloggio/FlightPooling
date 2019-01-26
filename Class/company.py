@@ -16,6 +16,9 @@ class flightsCompany():
     def getFlights (self,origin, destination, datein, dateout, type_of_flight="regularFare"):
         '''method to be overloaded in the dedicated class'''
         return ""
+    def getFlightCode(self,content):
+        FlightCode=""
+        return FlightCode
 
 
 

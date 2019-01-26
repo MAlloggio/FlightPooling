@@ -1,6 +1,7 @@
 import requests
 import json
 from Class.ryanair import flightsRyanair
+from Class.RunManagerRyan import runManagerRyan
 from Class.SqlManager import mySqlUtility
 from Class.SqlManager import managerSql
 from datetime import datetime
@@ -51,6 +52,7 @@ def main():
    volo = flightsRyanair(FLIGHT_URL,API_URL)
 
 
+
    ORIGIN = "BVA"
    DESTINATION = "BRI"
    DATEIN = "2019-05-02"
@@ -58,9 +60,10 @@ def main():
    TYPE_OF_FLIGHT = "regularFare"
 
    biglietti = volo.getFlights(ORIGIN,DESTINATION,DATEIN,DATEOUT)
+   m = runManagerRyan()
+   m.parseTickets(biglietti)
 
-
-   volo.printFlights(biglietti)
+   #volo.printFlights(biglietti)
 
    #printFlights(ORIGIN, DESTINATION, DATEIN, DATEOUT, TYPE_OF_FLIGHT)
    #print (p)
@@ -74,6 +77,8 @@ def main():
     TestMat=[[i,'FR1234']]
     manager = managerSql()
     manager.insertFlight(TestMat)'''
+
+
 
    # print ("STR_TO_DATE('" + TestMat[0][0] + "','%Y/%m/%d %H:%i%s'),Y)")
 if __name__ == "__main__":
