@@ -7,18 +7,24 @@ class runManager():
         content=flightsCompany.getFlights(destination, datein, dateout)
         return content
 
-    def saveRun(self,dateRunString,flightCode):
+    def saveRun(self,runParam):
         try:
             manager = managerSql
-            manager.saveRun(dateRunString,flightCode)
+            dateRunString = runParam[0]
+            flightCode = runParam[1]
+            flightCodeReturn = runParam[2]
+            manager.saveRun(self,dateRunString,flightCode,flightCodeReturn)
         except error as e:
             print(error)
 
     def saveTickets(self,tickets):
-        for ticket in tickets:
+        #tickets is a dictionary so i need to loop into it
+
+        for code in tickets:
             try:
+                ticket = tickets[code]
                 manager = managerSql
-                manager.saveTicket(ticket)
+                manager.saveTicket(self,ticket)
             except error as e:
                 print(error)
 

@@ -2,6 +2,10 @@ from Class.company import flightsCompany
 
 class flightsRyanair(flightsCompany):
 
+    def __init__(self):
+        self.API_FLIGHT = "https://desktopapps.ryanair.com/en-gb/availability?"
+        self.API_URL = "https://api.ryanair.com/aggregate/3/common?embedded=airports&market=en-gb"
+
     def getFlights(self,origin, destination, datein, dateout, type_of_flight="regularFare"):
         APIreq= self.API_FLIGHT + "ADT=1&CHD=0&DateIn=" + datein + "&DateOut=" + dateout + "&Destination=" + destination + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + origin + "&RoundTrip=true&TEEN=0" + "&ToUs=AGREED"
         content = super().GetFlight(APIreq)

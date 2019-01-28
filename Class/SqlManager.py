@@ -1,4 +1,5 @@
 from datetime import datetime
+#from Class.Tickets import ticket
 
 import pymysql
 import pymysql.cursors
@@ -48,27 +49,36 @@ class mySqlUtility():
         return queryResult
 
 class managerSql():
-    def saveRun(self,RunDateTimeString,voloCode):
+    def saveRun(self,RunDateTimeString,voloCode,voloCodeReturn):
 
         '''
         Method will update the header table saving the last run
         '''
 
         voloId = voloCode + "_" + RunDateTimeString.replace(' ', '').replace(':','').replace('/','')
+        voloIdReturn = voloCodeReturn + "_" + RunDateTimeString.replace(' ', '').replace(':','').replace('/','')
         RunDateTime = datetime.strptime(RunDateTimeString,'%d/%m/%Y %H:%M:%S')
         IsLastRun="Y"
         sqlStatmentHD = '''insert into POOLING_VOLO_HD (VOLO_ID,VOLOCODE,RunDateTime,IsLast) values (%s,%s,%s,%s)'''
         sqlValues=(voloId,voloCode,RunDateTime ,IsLastRun)
+        sqlValuesReturn=(voloIdReturn,voloCodeReturn,RunDateTime ,IsLastRun)
         utility=mySqlUtility
         utility.updateSQL(self,sqlStatmentHD,sqlValues)
+        utility.updateSQL(self, sqlStatmentHD, sqlValuesReturn)
+
 
     def saveTicket(self,ticket):
         '''Saving the into the body table'''
-
-        voloId = ticket.code + "_" + ticket.dateRunString.replace(' ', '').replace(':', '').replace('/', '')
-        voloMatchCode = ticket.code + "_" + ticket.depDateTimeString + "_" + ticket.arrDateTimeString
-        DepDate = datetime.strptime(ticket.depDateTimeString,'%d/%m/%Y %H:%M:%S')
-        ArrDate = datetime.strptime(ticket.arrDateTimeString,'%d/%m/%Y %H:%M:%S')
+        voloId = ticket.code + "_" + ticket.dateRunString.replace(' ', '').replace(':', '').replace('/','') + "_" + ticket.departure + "_" + \
+                 ticket.depDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
+        DepDate = datetime.strptime(ticket.depDateTimeString,'%m/%d/%Y %H:%M')
+        ArrDate = datetime.strptime(ticket.arrDateTimeString,'%m/%d/%Y %H:%M')
+        voloMatchCode = ticket.code + "_" + ticket.depDateTimeString.replace(' ', '').replace(':', '').replace('/', '') +\
+                        ticket.arrDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
+        departure = ticket.departure
+        dest = ticket.arrival
+        price = ticket.price
+        ccy = ticket.ccy
 
         sqlStatmentHD = '''insert into POOLING_VOLO_bD (VOLO_ID,VOLO_MATCH_CODE,DepDate,RetDate,
                                 Departure,Destination,Price,currency) values (%s,%s,%s,%s,%s,%s,%s,%s)'''

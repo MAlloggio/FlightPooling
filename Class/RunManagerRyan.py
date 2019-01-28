@@ -12,22 +12,48 @@ class runManagerRyan(runManager):
             for day in trip['dates']:
                 for flight in day['flights']:
                    try:
-                       #(self,dateRunString,code,departure,depDateTimeString,arrival,arrDateTimeString,price,ccy)
-                       dateRunString = datetime.fromtimestamp(time.time()).strftime('%d/%m/%Y %H:%M:%S')
+
+                       dateRunString = datetime.datetime.fromtimestamp(time.time()).strftime('%d/%m/%Y %H:%M:%S')
                        departure = trip['origin']
                        arrival = trip['destination']
                        depDateTimeString = flight['flightKey'].split("~")[5]
+                       code = flight['flightKey'].split("~")[0]+ "-" + flight['flightKey'].split("~")[1]
                        arrDateTimeString = flight['flightKey'].split("~")[7]
                        price = flight['regularFare']['fares'][0]['amount']
                        currency = content['currency']
-                       Tick = ticket(dateRunString,departure,arrival,depDateTimeString,arrDateTimeString,price,currency)
+                       Tick = ticket(dateRunString,code,departure,depDateTimeString,arrival,arrDateTimeString,price,currency)
                        voloId = Tick.code + "_" + Tick.dateRunString.replace(' ', '').replace(':', '').replace('/', '') + "_" + Tick.departure + "_" +\
                                 Tick.depDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
+                       Tickets[voloId] = Tick
                    except Error as e:
                        print(e)
-                   finally:
-                    Tickets[voloId]=Tick
-        return  Tickets
+
+        return Tickets
+    def parseRun(self, content):
+        '''The method will return a vector to save both the fly home and the return'''
+        runParameter = []
+        runParameter.append(datetime.datetime.fromtimestamp(time.time()).strftime('%d/%m/%Y %H:%M:%S'))
+        trip = content['trips'][0]
+        tripReturn = content['trips'][1]
+        for day in trip['dates']:
+            for flight in day['flights']:
+                try:
+                    runParameter.append(flight['flightKey'].split("~")[0] + "-" + flight['flightKey'].split("~")[1])
+                    break
+                except Error as e:
+                    print (e)
+            break
+        for day in tripReturn['dates']:
+            for flight in day['flights']:
+                try:
+                    runParameter.append(flight['flightKey'].split("~")[0] + "-" + flight['flightKey'].split("~")[1])
+                    break
+                except Error as e:
+                    print (e)
+            break
+        return runParameter
+
+
 
 '''BVA->BRI
 -- 04/22/2019 12:25 - 04/22/2019 14:45 - 141.77 EUR
