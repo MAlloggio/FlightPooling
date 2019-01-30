@@ -65,6 +65,7 @@ def main():
    tickets = m.parseTickets(biglietti)
    m.saveRun(runPar)
    m.saveTickets(tickets)
+   m.getLastTickets()
 
 
    #volo.printFlights(biglietti)
