@@ -79,35 +79,33 @@ class managerSql():
         price = ticket.price
         ccy = ticket.ccy
 
-        sqlStatmentHD = '''insert into POOLING_VOLO_bD (VOLO_ID,VOLO_MATCH_CODE,DepDate,RetDate,
+        sqlStatmentHD = '''insert into POOLING_VOLO_BD (VOLO_ID,VOLO_MATCH_CODE,DepDate,RetDate,
                                 Departure,Destination,Price,currency) values (%s,%s,%s,%s,%s,%s,%s,%s)'''
         sqlValues = (voloId,voloMatchCode,DepDate,ArrDate,departure,dest,price,ccy)
         utility = mySqlUtility
         utility.updateSQL(self, sqlStatmentHD, sqlValues)
 
     def getLastTickets(self, runParam):
-        RunDateTimeString = runParam[0]
+        '''RunDateTimeString = runParam[0]'''
         voloCode = runParam[1]
         voloCodeReturn = runParam[2]
-        voloId = voloCode + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
-        voloIdReturn = voloCodeReturn + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
-        sqlStatmentHD = "select bd.* from POOLING_VOLO_HD hd, POOLING_VOLO_BD bd where  hd.VOLO_ID = bd.VOLO_ID and hd.IsLast='Y' " \
-                        "and (hd.VOLO_ID = %s or hd.VOLO_ID = %s)"
-        sqlvalues = (voloId,voloIdReturn)
+        '''voloId = voloCode + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')'''
+        '''voloIdReturn = voloCodeReturn + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')'''
+        sqlStatmentHD = "select hd.RunDateTime, hd.VOLOCODE, bd.* from POOLING_VOLO_HD hd, POOLING_VOLO_BD bd where  hd.VOLO_ID = bd.VOLO_ID and hd.IsLast='Y' " \
+                        "and (hd.VOLOCODE = %s or hd.VOLOCODE = %s)"
+        sqlvalues = (voloCode,voloCodeReturn)
         utility = mySqlUtility
         lastTickets = utility.selectSQL(self, sqlStatmentHD,sqlvalues)
         '''The method return an array of dictionary. Each dictionary contains one line of the query. In  '''
+
         return lastTickets
 
     def changeLastRunTicket(self,runParam):
         '''The method will update to blank the old last run'''
-        RunDateTimeString = runParam[0]
         voloCode = runParam[1]
         voloCodeReturn = runParam[2]
-        voloId = voloCode + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
-        voloIdReturn = voloCodeReturn + "_" + RunDateTimeString.replace(' ', '').replace(':', '').replace('/', '')
-        sqlStatmentHD = "update POOLING_VOLO_HD set IsLast='' where IsLast='Y' and (hd.VOLO_ID = %s or hd.VOLO_ID = %s)"
-        sqlValues = (voloId,voloIdReturn)
+        sqlStatmentHD = "update POOLING_VOLO_HD set IsLast='' where IsLast='Y' and (VOLOCODE = %s or VOLOCODE = %s)"
+        sqlValues = (voloCode,voloCodeReturn)
         utility = mySqlUtility
-        utility.updateSql(self,sqlStatmentHD,sqlValues)
+        utility.updateSQL(self,sqlStatmentHD,sqlValues)
 

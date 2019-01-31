@@ -63,9 +63,14 @@ def main():
    m = runManagerRyan()
    runPar = m.parseRun(biglietti)
    tickets = m.parseTickets(biglietti)
+
+   lastTickets = m.getLastTickets(runPar)
+   cheaper = m.compareTicketPrice(tickets,lastTickets)
+   print (cheaper)
+   m.changeLastRunTicket(runPar)
    m.saveRun(runPar)
    m.saveTickets(tickets)
-   m.getLastTickets()
+   #FR - 8708_050220190925050220191200
 
 
    #volo.printFlights(biglietti)

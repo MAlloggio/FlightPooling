@@ -15,7 +15,7 @@ class ticket():
         '''boolean to check if a ticket is less expensive that the benchmark one'''
         cheaper = False
         if (self.price < ticketBench.price):
-            cheaper == True
+            cheaper = True
         return cheaper
 
 
