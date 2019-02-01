@@ -63,6 +63,8 @@ def main():
    m = runManagerRyan()
    runPar = m.parseRun(biglietti)
    tickets = m.parseTickets(biglietti)
+   #m.printResearch(tickets)
+   m.saveTicketsToFile(tickets)
 
    lastTickets = m.getLastTickets(runPar)
    cheaper = m.compareTicketPrice(tickets,lastTickets)
@@ -88,8 +90,10 @@ def main():
     manager = managerSql()
     manager.insertFlight(TestMat)'''
 
-
+def testFile():
+    open("cazzo.txt","w+")
 
    # print ("STR_TO_DATE('" + TestMat[0][0] + "','%Y/%m/%d %H:%i%s'),Y)")
 if __name__ == "__main__":
+    #testFile()
     main()

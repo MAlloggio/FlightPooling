@@ -11,6 +11,16 @@ class ticket():
         self.price = price
         self.ccy = ccy
 
+    def print(self):
+        print(self.code + "  " + self.departure + " " + self.depDateTimeString +\
+              " ---> " + self.arrival + " " + self.arrDateTimeString + "  " + str(self.price) + " " + self.ccy)
+    def printInString(self):
+        String = self.code + "  " + self.departure + " " + self.depDateTimeString + \
+              " ---> " + self.arrival + " " + self.arrDateTimeString + "  " + str(self.price) + " " + self.ccy + "\n"
+        return String
+
+
+
     def isCheaper(self,ticketBench):
         '''boolean to check if a ticket is less expensive that the benchmark one'''
         cheaper = False

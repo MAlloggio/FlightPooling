@@ -1,6 +1,7 @@
 from Class.company import flightsCompany
 from Class.SqlManager import managerSql
 from Class.Tickets import ticket
+from Class.FileManager import fileManager
 import time
 import datetime
 
@@ -10,6 +11,9 @@ class runManager():
         content=flightsCompany.getFlights(destination, datein, dateout)
         return content
 
+    def printResearch(self,tickets):
+        for code in tickets:
+            tickets[code].print()
     def saveRun(self,runParam):
         try:
             manager = managerSql
@@ -72,6 +76,16 @@ class runManager():
               if ticket.isCheaper(lastTicket):
                     cheaperTickets.append(ticket)
         return cheaperTickets
+
+    def saveTicketsToFile(self, tickets):
+        FileManager = fileManager
+        for code in tickets:
+            ticket = tickets[code]
+            lineToSave = ticket.printInString()
+            filename = ticket.code + "_" + ticket.dateRunString.replace(' ','_').replace('/','') + ".txt"
+            FileManager.writeOnFile(self,filename,lineToSave)
+
+
 
    #FR - 8708_050220190925050220191200
 
