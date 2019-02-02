@@ -7,6 +7,7 @@ from Class.SqlManager import managerSql
 from datetime import datetime
 import time
 from Class import company
+#test
 
 FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?"
 #FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?ADT=1&CHD=0&DateIn=" + DATEIN + "&DateOut=" + DATEOUT + "&Destination=" + DESTINATION + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + ORIGIN + "&RoundTrip=true&TEEN=0"
@@ -16,7 +17,7 @@ API_URL="https://api.ryanair.com/aggregate/3/common?embedded=airports&market=en-
 
 requests.packages.urllib3.disable_warnings()
 
-## Print flights
+## Print flights #figa
 def printFlights(origin, destination, datein, dateout, type_of_flight="regularFare"):
     url = FLIGHT_URL + "ADT=1&CHD=0&DateIn=" + datein + "&DateOut=" + dateout + "&Destination=" + destination + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + origin + "&RoundTrip=true&TEEN=0" + "&ToUs=AGREED"
     r = requests.get(url)
@@ -97,3 +98,4 @@ def testFile():
 if __name__ == "__main__":
     #testFile()
     main()
+    #test2
