@@ -7,6 +7,7 @@ from Class.SqlManager import managerSql
 from datetime import datetime
 import time
 from Class import company
+#test
 
 FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?"
 #FLIGHT_URL="https://desktopapps.ryanair.com/en-gb/availability?ADT=1&CHD=0&DateIn=" + DATEIN + "&DateOut=" + DATEOUT + "&Destination=" + DESTINATION + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + ORIGIN + "&RoundTrip=true&TEEN=0"
