@@ -17,7 +17,7 @@ API_URL="https://api.ryanair.com/aggregate/3/common?embedded=airports&market=en-
 
 requests.packages.urllib3.disable_warnings()
 
-## Print flights
+## Print flights #figa
 def printFlights(origin, destination, datein, dateout, type_of_flight="regularFare"):
     url = FLIGHT_URL + "ADT=1&CHD=0&DateIn=" + datein + "&DateOut=" + dateout + "&Destination=" + destination + "&FlexDaysIn=6&FlexDaysOut=4&INF=0&Origin=" + origin + "&RoundTrip=true&TEEN=0" + "&ToUs=AGREED"
     r = requests.get(url)
